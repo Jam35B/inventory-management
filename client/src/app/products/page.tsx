@@ -6,15 +6,16 @@ import { useState } from "react";
 import Header from "@/app/(components)/Header";
 import Rating from "@/app/(components)/Rating";
 import CreateProductModal from "./CreateProductModal";
+import Image from "next/image";
 
-type productFormData = {
+type ProductFormData = {
   name: string;
   price: number;
   stockQuantity: number;
   rating: number;
 };
 
-const products = () => {
+const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -25,58 +26,69 @@ const products = () => {
   } = useGetProductsQuery(searchTerm);
 
   const [createProduct] = useCreateProductMutation();
-  const handleCreateProduct = async (productData: productFormData) => {
+  const handleCreateProduct = async (productData: ProductFormData) => {
     await createProduct(productData);
   };
 
   if (isLoading) {
-    return <div className="py-4">Cargando...</div>;
+    return <div className="py-4">Loading...</div>;
   }
 
   if (isError || !products) {
     return (
       <div className="text-center text-red-500 py-4">
-        Fallo al recivir productos
+        Failed to fetch products
       </div>
     );
   }
+
   return (
-    <div className="mx-auto pb-0.5 w-full">
+    <div className="mx-auto pb-5 w-full">
       {/* SEARCH BAR */}
       <div className="mb-6">
         <div className="flex items-center border-2 border-gray-200 rounded">
           <SearchIcon className="w-5 h-5 text-gray-500 m-2" />
           <input
             className="w-full py-2 px-4 rounded bg-white"
-            placeholder="Buscar Productos..."
+            placeholder="Search products..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
+
       {/* HEADER BAR */}
       <div className="flex justify-between items-center mb-6">
-        <Header name="productos" />
+        <Header name="Products" />
         <button
           className="flex items-center bg-blue-500 hover:bg-blue-700 text-gray-200 font-bold py-2 px-4 rounded"
           onClick={() => setIsModalOpen(true)}
         >
-          <PlusCircleIcon className="w-5 h-5 mr-2 !text-gray-200" />
-          Crear Producto
+          <PlusCircleIcon className="w-5 h-5 mr-2 !text-gray-200" /> Create
+          Product
         </button>
       </div>
+
       {/* BODY PRODUCTS LIST */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg-grid-cols-3 gap-10 justify-between">
         {isLoading ? (
-          <div>Cargando...</div>
+          <div>Loading...</div>
         ) : (
           products?.map((product) => (
             <div
               key={product.productId}
               className="border shadow rounded-md p-4 max-w-full w-full mx-auto"
             >
-              <div className="flex felx-col items-center">
-                img
+              <div className="flex flex-col items-center">
+                <Image
+                  src={`https://s3-inventorymanagement.s3.us-east-2.amazonaws.com/product${
+                    Math.floor(Math.random() * 3) + 1
+                  }.png`}
+                  alt={product.name}
+                  width={150}
+                  height={150}
+                  className="mb-3 rounded-2xl w-36 h-36"
+                />
                 <h3 className="text-lg text-gray-900 font-semibold">
                   {product.name}
                 </h3>
@@ -94,6 +106,7 @@ const products = () => {
           ))
         )}
       </div>
+
       {/* MODAL */}
       <CreateProductModal
         isOpen={isModalOpen}
@@ -104,4 +117,4 @@ const products = () => {
   );
 };
 
-export default products;
+export default Products;
