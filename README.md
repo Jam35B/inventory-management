@@ -1,6 +1,7 @@
 # Full Stack Inventory Management Dashboard
 
 This project is a full-stack inventory management dashboard designed to help users manage products, expenses, users, and settings. Built with a modern stack, the application is fully responsive and includes various filtering and search functionalities.
+Here is the link of the Inventory Management: https://master.d1smn2dbb172iq.amplifyapp.com/
 
 ## Table of Contents
 - [Overview](#overview)
