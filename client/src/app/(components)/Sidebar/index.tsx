@@ -81,8 +81,8 @@ const Sidebar = () => {
         }`}
       >
         <Image
-          src="https://s3-jaminventorymanagement.s3.sa-east-1.amazonaws.com/logo.jpg"
-          alt="Jamstock-logo"
+          src="https://s3-jaminventorymanagement.s3.sa-east-1.amazonaws.com/logo.png"
+          alt="edstock-logo"
           width={27}
           height={27}
           className="rounded w-8"

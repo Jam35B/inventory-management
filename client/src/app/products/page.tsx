@@ -80,7 +80,15 @@ const Products = () => {
               className="border shadow rounded-md p-4 max-w-full w-full mx-auto"
             >
               <div className="flex felx-col items-center">
-                img
+                <Image
+                  src={`https://s3-jaminventorymanagement.s3.sa-east-1.amazonaws.com/product${
+                    Math.floor(Math.random() * 3) + 1
+                  }.png`}
+                  alt={product.name}
+                  width={48}
+                  height={48}
+                  className="rounded-lg w-14 h-14"
+                />
                 <h3 className="text-lg text-gray-900 font-semibold">
                   {product.name}
                 </h3>
